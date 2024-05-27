@@ -1,12 +1,11 @@
 #define DEFAULT 0
-#define COLEMAK 1
-#define NUM     2
-#define SYM     3
-#define FUN     4
+#define LOWER   1
+#define RAISE   2
+#define SYS     3
 
 #include "key-common.dtsi"
 
-&mt {
+&ht {
    flavor = "tap-preferred";
    tapping_term_ms = <200>;
 };
@@ -15,58 +14,51 @@
 
     keymap {
         compatible = "zmk,keymap";
-                
-     		default_layer {
-            label = "QWRT";
-        		bindings = <
-            		&kp Q &kp W      &kp E      &kp R      &kp T        &kp Y     &kp U      &kp I       &kp O       &kp P
-             		&kp A &mt LSFT S &mt LALT D &mt LCTL F &lt NUM G    &lt NUM H &mt RCTL J &mt RALT K  &mt RSFT L  &kp SQT 
-                &kp Z &kp X      &kp C      &kp V      &kp B        &kp N     &kp M      &cmqus      &dtsmi      &kp RC(B)
-                    &encoder     &lt FUN TAB    &lt SYM SPACE       &lt SYM RET   &lt FUN BSPC   &encoder
-             		>;
-            sensor-bindings = <&inc_dec_kp RIGHT LEFT &inc_dec_kp UP DOWN>;
-		    };
-
-     		colemak_layer {
+            
+        // Base alpha layer
+        default_layer {
             label = "CLMK";
         		bindings = <
-            		&kp Q &kp W      &kp F      &kp P      &kp B        &kp J     &kp L      &kp U      &kp Y      &kp SQT
-             		&kp A &mt LSFT R &mt LALT S &mt LCTL T &lt NUM G    &lt NUM M &mt RCTL N &mt RALT E &mt RSFT I &kp O
-                &kp Z &kp X      &kp C      &kp D      &kp V        &kp K     &kp H      &cmqus     &dtsmi     &kp RC(B)
-                    &encoder     &lt FUN TAB    &lt SYM SPACE       &lt SYM RET   &lt FUN BSPC   &encoder
+                    &kp Q           &kp W                   &kp F                   &kp P             &kp B                 &kp J           &kp L                   &kp U                   &kp Y               &kp SEMICOLON
+                    &ht LEFT_GUI A  &ht LEFT_ALT R          &ht LCTRL S             &ht LEFT_SHIFT T  &kp G                 &kp M           &ht RIGHT_SHIFT N       &ht RIGHT_CONTROL E     &ht LEFT_ALT I      &ht LEFT_GUI O
+                    &kp X           &kp C                   &kp D                   &kp V             &kp Z                 &kp K           &kp H                   &kp COMMA               &kp PERIOD          &kp SLASH
+                                                            &encoder                &lt 2 BACKSPACE   &kp TAB               &kp ENTER       &lt 1 SPACE             &encoder
              		>;
             sensor-bindings = <&inc_dec_kp RIGHT LEFT &inc_dec_kp UP DOWN>;
 		    };
 
-        number_layer {
-            label = "NUM";
+        // Numbers and high frequency symbols
+        lower_layer {
+            label = "LOWER";
             bindings = <
-                &bt BT_NXT  &none     &kp UP    &none      &spc1      &kp KP_PLUS     &kp KP_N7 &kp KP_N8 &kp KP_N9 &kp KP_MINUS
-                &bt BT_PRV  &kp LEFT  &kp DOWN  &kp RIGHT  &spc2      &kp KP_MULTIPLY &kp KP_N4 &kp KP_N5 &kp KP_N6 &kp KP_DIVIDE
-                &bt BT_CLR  &none     &none     &none      &spc3      &kp KP_EQUAL    &kp KP_N1 &kp KP_N2 &kp KP_N3 &kp KP_DOT
-                                      &encoder  &spc4      &kp BSPC      &kp RET         &kp KP_N0  &encoder
+                    &kp N1           &kp N2                 &kp N3                  &kp N4            &kp N5                &kp N6          &kp N7                  &kp N8                  &kp N9              &kp N0
+                    &kp EXCLAMATION  &kp AT_SIGN            &kp POUND               &kp DOLLAR        &kp PERCENT           &kp CARET       &kp AMPERSAND           &kp ASTERISK            &kp SEMICOLON       &kp APOS
+                    &kp ESCAPE       &kp LEFT_PARENTHESIS   &kp RIGHT_PARENTHESIS   &kp LEFT_BRACKET  &kp RIGHT_BRACKET     &kp LEFT_BRACE  &kp RIGHT_BRACE         &kp LESS_THAN           &kp GREATER_THAN    &kp PLUS
+                                                            &encoder                &to 3             &none                 &none           &none                   &encoder
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        symbol_layer {
-            label = "SYM";
+        // Main modifiers and arrow keys
+        raise_layer {
+            label = "RAISE";
             bindings = <
-                &none     &none    &kp LT    &kp GT   &kp PRCNT   &kp AMPS &kp CARET &kp LBRC &kp RBRC &tog COLEMAK
-                &kp GRAVE &kp EXCL &kp MINUS &kp PLUS &kp EQUAL   &kp PIPE &kp COLON &kp LPAR &kp RPAR &kp AT
-                &none     &none    &kp SLASH &kp STAR &kp BSLH    &kp HASH &kp DLLR  &kp LBKT &kp RBKT &none  
-                                      &encoder  &none    &none       &none    &none  &encoder
+                    &kp F1          &kp F2                  &kp F3                  &kp F4              &kp F5              &kp HOME        &kp END                 &kp PAGE_UP             &kp PAGE_DOWN       &kp LA(TAB)
+                    &kp F6          &kp F7                  &kp F8                  &kp F9              &kp F10             &kp LEFT        &kp DOWN                &kp UP_ARROW            &kp RIGHT           &kp K_APPLICATION
+                    &kp F11         &kp LC(X)               &kp LC(C)               &kp LC(V)           &kp F12             &none           &none                   &none                   &none               &none
+                                                            &encoder                &none               &none               &kp DELETE      &none                   &encoder
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
         
-        function_layer {
-            label = "FUN";
+        // Function keys with modifiers
+        system_layer {
+            label = "SYS";
             bindings = <
-                &none  &kp F1  &kp F2  &kp F3  &none       &none &kp F4  &kp F5  &kp F6  &none
-                &none  &kp F7  &kp F8  &kp F9  &none       &none &kp F10 &kp F11 &kp F12 &none
-                &none  &none   &none   &none   &none       &none &none   &none   &none   &none
-                               &none   &none   &none       &none &none   &none
+                    &bt BT_CLR      &bt BT_SEL 0            &bt BT_SEL 1            &bt BT_SEL 2        &bt BT_SEL 3        &kp C_BRIGHTNESS_INC    &kp C_VOLUME_UP     &kp C_MUTE        &kp K_VOLUME_DOWN   &kp C_BRIGHTNESS_DEC
+                    &trans          &trans                  &trans                  &trans              &trans              &trans                  &kp C_REWIND        &kp C_PLAY_PAUSE  &kp C_FAST_FORWARD  &trans
+                    &bootloader     &none                   &none                   &none               &none               &none                   &none               &none             &none               &bootloader
+                                                            &none                   &to 0               &none               &none                   &none               &none
             >;
             sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
