@@ -7,10 +7,8 @@
     // macros
     macros {
       ZMK_MACRO(unstick, //ZM_unstick
-        compatible = "zmk,behavior-macro";
         wait-ms = <0>;
         tap-ms  = <10>;
-        #binding-cells = <0>;
         bindings = <&kp LSHIFT &kp RSHIFT &kp LCTRL &kp RCTRL &kp LALT &kp RALT &kp LGUI &kp RGUI>;
       )
 
